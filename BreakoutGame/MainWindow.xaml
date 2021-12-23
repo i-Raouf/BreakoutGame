@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BreakoutGame"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize" 
+        Title="Breakout Game" Height="600" Width="800">
+    <Canvas x:Name="GameCanva">
 
-    </Grid>
+    </Canvas>
 </Window>
