@@ -24,5 +24,26 @@ namespace BreakoutGame
         {
             InitializeComponent();
         }
+
+        private void OnLoad(object sender, RoutedEventArgs e)
+        {
+            var centerPos = (this.Width - Paddle.Width) / 2;
+            MovePaddle(centerPos);
+        }
+
+        private void MovePaddle(double newXPos)
+        {
+            if (newXPos < 0)
+                newXPos = 0;
+            if (newXPos > this.Width - Paddle.Width - 15)
+                newXPos =this.Width - Paddle.Width - 15;
+            Canvas.SetLeft(Paddle, newXPos);
+        }
+
+        private void Canvas_MouseMove(object sender, MouseEventArgs e)
+        {
+            var position = e.GetPosition(GameCanva);
+            MovePaddle(position.X);
+        }
     }
 }

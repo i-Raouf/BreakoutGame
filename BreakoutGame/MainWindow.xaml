@@ -6,9 +6,17 @@
         xmlns:local="clr-namespace:BreakoutGame"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanMinimize" 
+        Loaded="OnLoad"
+        ResizeMode="CanMinimize"
+        MouseMove="Canvas_MouseMove"
         Title="Breakout Game" Height="600" Width="800">
     <Canvas x:Name="GameCanva">
-
+        <Rectangle x:Name="Paddle" 
+            Width="140"
+            Height="20"
+            Fill="Blue"
+            Stroke="Black" StrokeThickness="0.1"
+            RadiusX="10" RadiusY="10"
+            Canvas.Bottom="30"/>
     </Canvas>
 </Window>
