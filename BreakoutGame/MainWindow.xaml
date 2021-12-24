@@ -18,5 +18,13 @@
             Stroke="Black" StrokeThickness="0.1"
             RadiusX="10" RadiusY="10"
             Canvas.Bottom="30"/>
+
+        <Ellipse x:Name="Ball"
+            Width="25"
+            Height="25"
+            Stroke="Black" StrokeThickness="0.1"
+            Fill="Red"
+            Canvas.Left="400"
+            Canvas.Bottom="100" />
     </Canvas>
 </Window>

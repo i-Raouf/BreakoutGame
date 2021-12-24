@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -20,6 +21,10 @@ namespace BreakoutGame
     /// </summary>
     public partial class MainWindow : Window
     {
+        DispatcherTimer gameTimer = new DispatcherTimer();
+        int ballSpeed = 5;
+        int ballDX = 1;
+        int ballDY = 1;
         public MainWindow()
         {
             InitializeComponent();
@@ -27,8 +32,31 @@ namespace BreakoutGame
 
         private void OnLoad(object sender, RoutedEventArgs e)
         {
+            // center paddle
             var centerPos = (this.Width - Paddle.Width) / 2;
             MovePaddle(centerPos);
+            // position the ball
+            Canvas.SetLeft(Ball, ((this.Width - Ball.Width) / 2));
+            Canvas.SetTop(Ball, 400);
+            // set game timer
+            gameTimer.Interval = new TimeSpan(0,0,0,0,1000/60); // 60fps
+            gameTimer.Tick +=  new EventHandler(GameTimer_Tick);
+            gameTimer.Start();
+        }
+
+        private void GameTimer_Tick(object sender, EventArgs e)
+        {
+            var ballXpostion = (double)Ball.GetValue(Canvas.LeftProperty);
+            var ballYpostion = (double)Ball.GetValue(Canvas.TopProperty);
+
+            if (ballXpostion < 0 || ballXpostion > (this.Width - Ball.Width - 15))
+                ballDX = -ballDX;
+
+            if (ballYpostion < 0 || ballYpostion > (this.Height - Ball.Height))
+                ballDY = -ballDY;
+
+            Canvas.SetLeft(Ball, ballXpostion + ballSpeed * ballDX);
+            Canvas.SetTop(Ball, ballYpostion + ballSpeed * ballDY);
         }
 
         private void MovePaddle(double newXPos)
