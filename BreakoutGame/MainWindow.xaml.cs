@@ -58,6 +58,13 @@ namespace BreakoutGame
             if (ballYpostion < 0)
                 ballDY = -ballDY;
 
+            if (ballYpostion > (this.Height-60))
+            {
+                // game over
+                OverText.Visibility = Visibility.Visible;
+                gameTimer.Stop();
+            }
+
             // collision with paddle
             Rect recBall = new Rect(Canvas.GetLeft(Ball), Canvas.GetTop(Ball), Ball.Width, Ball.Height);
             Rect recPaddle = new Rect(Canvas.GetLeft(Paddle), Canvas.GetTop(Paddle), Paddle.Width, Paddle.Height);
