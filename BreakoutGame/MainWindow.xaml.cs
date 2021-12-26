@@ -23,7 +23,7 @@ namespace BreakoutGame
     public partial class MainWindow : Window
     {
         DispatcherTimer gameTimer = new DispatcherTimer();
-        int ballSpeed = 5;
+        int ballSpeed = 1;
         int ballDX = 1;
         int ballDY = 1;
         public MainWindow()
@@ -33,13 +33,14 @@ namespace BreakoutGame
 
         private void OnLoad(object sender, RoutedEventArgs e)
         {
+            paintBlocks();
             // center paddle
             var centerPos = (this.Width - Paddle.Width) / 2;
             MovePaddle(centerPos);
             Canvas.SetTop(Paddle, (this.Height - 100));
             // position the ball
             Canvas.SetLeft(Ball, ((this.Width - Ball.Width) / 2));
-            Canvas.SetTop(Ball, 300);
+            Canvas.SetTop(Ball, (this.Height - 150));
             // set game timer
             gameTimer.Interval = new TimeSpan(0,0,0,0,1000/60); // 60fps
             gameTimer.Tick +=  new EventHandler(GameTimer_Tick);
@@ -91,6 +92,33 @@ namespace BreakoutGame
         {
             var position = e.GetPosition(GameCanva);
             MovePaddle(position.X);
+        }
+
+        private void paintBlocks()
+        {
+            var length = 20;
+            var side = 25;
+            var top = side;
+            var left = (this.Width - (side*length) -15) / 2;
+            Random r = new Random();
+
+            for (int l = 0; l < length; l++)
+            {
+                for (int c = 0; c < length; c++)
+                {
+                    // ColorConverter.ConvertFromString("");
+                    Brush brush = new SolidColorBrush(Color.FromRgb((byte)r.Next(1,255),(byte)r.Next(1,255),(byte)r.Next(1,233)));
+                    Rectangle rec = new Rectangle();
+                    rec.Uid = $"b({l},{c})";
+                    rec.Width = side;
+                    rec.Height = side;
+                    Canvas.SetTop(rec, top+(l*side));
+                    Canvas.SetLeft(rec, left+(c*side));
+                    // rec.Fill = Brushes.Black;
+                    rec.Fill = brush;
+                    GameCanva.Children.Add(rec);
+                }
+            }
         }
     }
 }

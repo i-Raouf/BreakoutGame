@@ -9,7 +9,7 @@
         Loaded="OnLoad"
         ResizeMode="CanMinimize"
         MouseMove="Canvas_MouseMove"
-        Title="Breakout Game" Height="600" Width="800">
+        Title="Breakout Game" Height="768" Width="1024">
     <Grid>
         <TextBlock Name="OverText"
             Text="Game Over"  
@@ -27,8 +27,8 @@
                 RadiusX="10" RadiusY="10" />
 
             <Ellipse x:Name="Ball"
-                Width="25"
-                Height="25"
+                Width="20"
+                Height="20"
                 Stroke="Black" StrokeThickness="0.1"
                 Fill="Red" />
         </Canvas>
