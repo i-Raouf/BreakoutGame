@@ -75,6 +75,54 @@ namespace BreakoutGame
                 ballDY = -ballDY;
             }
 
+
+            // collision with blocks
+            var length = 20;
+            var side = 25;
+            var top = side;
+            var left = (this.Width - (side*length) -15) / 2;
+
+            Point[] pts = new Point[]
+            {
+                new Point(ballXpostion, ballYpostion),
+                new Point(ballXpostion + Ball.Width, ballYpostion),
+                new Point(ballXpostion, ballYpostion + Ball.Height),
+                new Point(ballXpostion + Ball.Width, ballYpostion + Ball.Height)
+            };
+
+            List<UIElement> itemstoremove = new List<UIElement>();
+            foreach (var pt in pts)
+            {
+                int area = length*side;
+                int xpos = (int)left;
+                int ypos = top;
+
+                int row = (int)pt.Y - ypos;
+                int col = (int)pt.X - xpos;
+
+                
+                row /= side;
+                col /= side;
+                if (col >= 0 && col < area && row >= 0 && row < area)
+                {
+                    foreach (UIElement uie in GameCanva.Children)
+                    {
+                        if (uie.Uid == $"b({row},{col})")
+                        {
+                            itemstoremove.Add(uie);
+                        }
+                    }
+                }
+            }
+            if (itemstoremove.Count > 0)
+            {
+                foreach (UIElement uie in itemstoremove)
+                {
+                    GameCanva.Children.Remove(uie);
+                }
+                ballDY = -ballDY;
+            }
+            
             Canvas.SetLeft(Ball, ballXpostion + ballSpeed * ballDX);
             Canvas.SetTop(Ball, ballYpostion + ballSpeed * ballDY);
         }
