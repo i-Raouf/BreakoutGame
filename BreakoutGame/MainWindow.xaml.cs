@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using System.IO;
 
 namespace BreakoutGame
 {
@@ -23,7 +24,7 @@ namespace BreakoutGame
     public partial class MainWindow : Window
     {
         DispatcherTimer gameTimer = new DispatcherTimer();
-        int ballSpeed = 1;
+        int ballSpeed = 5;
         int ballDX = 1;
         int ballDY = 1;
         public MainWindow()
@@ -144,29 +145,56 @@ namespace BreakoutGame
 
         private void paintBlocks()
         {
+
             var length = 20;
             var side = 25;
             var top = side;
             var left = (this.Width - (side*length) -15) / 2;
             Random r = new Random();
 
-            for (int l = 0; l < length; l++)
+            int l = 0;
+            Dictionary<char,Brush> dict = new Dictionary<char, Brush>();
+            foreach (var line in File.ReadLines(@"blocks/mario2.txt"))
             {
-                for (int c = 0; c < length; c++)
+                for (int c = 0; c < line.Length; c++)
                 {
-                    // ColorConverter.ConvertFromString("");
-                    Brush brush = new SolidColorBrush(Color.FromRgb((byte)r.Next(1,255),(byte)r.Next(1,255),(byte)r.Next(1,233)));
-                    Rectangle rec = new Rectangle();
-                    rec.Uid = $"b({l},{c})";
-                    rec.Width = side;
-                    rec.Height = side;
-                    Canvas.SetTop(rec, top+(l*side));
-                    Canvas.SetLeft(rec, left+(c*side));
-                    // rec.Fill = Brushes.Black;
-                    rec.Fill = brush;
-                    GameCanva.Children.Add(rec);
+                    Debug.WriteLine($"{l}_{c}");
+                    if (line[c] == '0')
+                        continue;
+                    else {
+                        if (!dict.Keys.Contains(line[c]))
+                            dict[line[c]] = new SolidColorBrush(Color.FromRgb((byte)r.Next(1,255),(byte)r.Next(1,255),(byte)r.Next(1,233)));
+                        Rectangle rec = new Rectangle();
+                        rec.Uid = $"b({l},{c})";
+                        rec.Width = side;
+                        rec.Height = side;
+                        Canvas.SetTop(rec, top+(l*side));
+                        Canvas.SetLeft(rec, left+(c*side));
+                        // rec.Fill = Brushes.Black;
+                        rec.Fill = dict[line[c]];
+                        GameCanva.Children.Add(rec);
+                    }
                 }
+                l++;
             }
+
+            // for (int l = 0; l < length; l++)
+            // {
+            //     for (int c = 0; c < length; c++)
+            //     {
+            //         // ColorConverter.ConvertFromString("");
+            //         Brush brush = new SolidColorBrush(Color.FromRgb((byte)r.Next(1,255),(byte)r.Next(1,255),(byte)r.Next(1,233)));
+            //         Rectangle rec = new Rectangle();
+            //         rec.Uid = $"b({l},{c})";
+            //         rec.Width = side;
+            //         rec.Height = side;
+            //         Canvas.SetTop(rec, top+(l*side));
+            //         Canvas.SetLeft(rec, left+(c*side));
+            //         // rec.Fill = Brushes.Black;
+            //         rec.Fill = brush;
+            //         GameCanva.Children.Add(rec);
+            //     }
+            // }
         }
     }
 }

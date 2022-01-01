@@ -16,7 +16,8 @@
             VerticalAlignment="Center"  
             HorizontalAlignment="Center"
             Visibility="Hidden"
-            FontSize="18 pt" >  
+            FontSize="18 pt"
+            Canvas.ZIndex="3" >  
         </TextBlock> 
         <Canvas x:Name="GameCanva">
             <Rectangle x:Name="Paddle" 
